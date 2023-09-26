@@ -1,39 +1,54 @@
-var cliente = prompt("Informe seu Nome")
-if (cliente !== null && cliente !== ""){
+var cliente = prompt("Informe seu Nome");
+
+if (cliente !== null && cliente !== "") {
     var nomeCliente = document.querySelector("#nomeCliente");
-    nomeCliente.textContent = `${cliente}`
+    nomeCliente.textContent = `${cliente}`;
 }
 
-var saldo = prompt("Digite o Valor")
-var saldoReal = saldo;
-//var recebe = parseFloat(saldo.replace("R$",""))
-if (saldo !== null && saldo !== ""){
+var saldo = prompt("Digite o Valor");
+var saldoReal = parseFloat(saldo.replace("R$", "").trim());
+
+if (!isNaN(saldoReal)) {
     var saldoCliente = document.querySelector("#saldo-valor");
-    saldoCliente.textContent = ` ${saldo}`
+    saldoCliente.textContent = `R$ ${saldoReal.toFixed(2)}`;
 }
 
-function gastos(){
-
-
+// Função para atualizar o saldo exibido
 function atualizarSaldo() {
-    document.querySelector("saldo-valor").textContent = saldo;
+    document.querySelector("#saldo-valor").textContent = `R$ ${saldoReal.toFixed(2)}`;
+}
+
+// Função genérica para lidar com o gasto
+function gasto(valorGasto, descricao) {
+    if (saldoReal >= valorGasto) {
+        saldoReal -= valorGasto;
+        atualizarSaldo();
+    } else {
+        alert(`Ops!!! Saldo insuficiente para ${descricao}`);
+    }
 }
 
 // Função para lidar com o gasto de comida
 function gastoComida() {
-    const valorComida = 1;
-    
-    if (saldoReal >= valorComida) {
-        saldoReal = saldoReal - valorComida;
-        atualizarSaldo();
-    } else {
-        alert("Ops!!! Tá Liso?");
-    }
+    gasto(15, "comida");
 }
-atualizarSaldo();
-// Adicione ouvintes de eventos aos botões de gastos
+
+// Função para lidar com o gasto de brinquedo
+function gastoBrinquedo() {
+    gasto(10, "brinquedo");
+}
+
+// Função para lidar com o gasto de circo
+function gastoCirco() {
+    gasto(25, "circo"); // Funciona da mesma forma que brinquedo (2 unidades)
+}
+
+// Adicione ouvintes de eventos às imagens de gastos
 document.getElementById("comida").addEventListener("click", gastoComida);
+document.getElementById("brinquedo").addEventListener("click", gastoBrinquedo);
 
+// Adicione um ouvinte de eventos à imagem "circo" para que funcione como "brinquedo"
+document.getElementById("circo").addEventListener("click", gastoCirco);
 
-
-}
+// Chame a função de atualização de saldo para exibir o saldo inicial
+atualizarSaldo();

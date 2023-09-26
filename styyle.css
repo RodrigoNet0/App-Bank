@@ -76,6 +76,7 @@ main {
     justify-content: center;
     align-items: center;
     background-color: #c4ecfc;
+    box-shadow: rgba(216, 28, 233, 0.25) 0px 14px 28px, rgba(236, 52, 197, 0.22) 0px 10px 10px;
     border-radius: 20px;
     margin-top: 1rem;
 }
